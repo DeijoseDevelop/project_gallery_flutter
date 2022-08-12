@@ -9,10 +9,10 @@ class ImageDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         child: PhotoView(
-          imageProvider: NetworkImage(image.src!.large!),
-          minScale: PhotoViewComputedScale.contained * 0.8,
+          imageProvider: NetworkImage(image.src!.large2X!),
+          minScale: PhotoViewComputedScale.contained * 1,
           maxScale: PhotoViewComputedScale.covered * 1.1,
           initialScale: PhotoViewComputedScale.contained * 0.8,
           basePosition: Alignment.center,

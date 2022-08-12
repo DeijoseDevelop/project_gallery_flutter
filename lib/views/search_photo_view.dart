@@ -15,6 +15,7 @@ class _SearchPhotoViewState extends State<SearchPhotoView> {
 
   @override
   Widget build(BuildContext context) {
+
     TextEditingController _searchController = TextEditingController();
 
     GalleryService _galleryService = GalleryService();
@@ -106,7 +107,7 @@ class _Builder extends StatelessWidget {
                 padding: const EdgeInsets.all(2),
                 child: Hero(
                   tag: photos!.photos![index].id!,
-                  child: Image.network(photos!.photos![index].src!.original!,
+                  child: Image.network(photos!.photos![index].src!.small!,
                       fit: BoxFit.cover),
                 ),
               ),

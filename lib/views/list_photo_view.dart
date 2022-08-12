@@ -42,7 +42,7 @@ class ListPhotoView extends StatelessWidget {
                   padding: const EdgeInsets.all(2),
                   child: Hero(
                     tag: photos[index].id!,
-                    child: Image.network(photos[index].src?.large ?? "",
+                    child: Image.network(photos[index].src?.medium ?? "",
                         fit: BoxFit.cover),
                   ),
                 ),
