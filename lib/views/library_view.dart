@@ -115,7 +115,7 @@ class _ElementGridState extends State<_ElementGrid> {
                     borderRadius: BorderRadius.circular(10.0),
                     child: SizedBox(
                       width: _width,
-                      height: _height,
+                      height: _height * 0.8,
                       child: Image.network(
                         image!,
                         fit: BoxFit.cover,
@@ -123,11 +123,13 @@ class _ElementGridState extends State<_ElementGrid> {
                     ),
                   )
                 : const Center(child: CircularProgressIndicator()),
-            Text(
-              widget.category,
-              style: GoogleFonts.roboto(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Expanded(
+              child: Text(
+                widget.category,
+                style: GoogleFonts.roboto(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

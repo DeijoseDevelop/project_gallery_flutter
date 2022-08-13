@@ -2,7 +2,7 @@
     package="com.example.gallery_image">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="GooglePhotosFake"
+        android:label="PhotosFake"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
