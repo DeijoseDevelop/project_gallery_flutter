@@ -16,7 +16,7 @@ class _HomeViewState extends State<HomeView> {
   static final List<Widget> _widgets = <Widget>[
     ListPhotoView(galleryService: GalleryService().getGallery()),
     const SearchPhotoView(),
-    const Text('HomeView'),
+    const LibraryView(),
     const TakePhotoView(),
   ];
 
@@ -32,17 +32,14 @@ class _HomeViewState extends State<HomeView> {
       child: Scaffold(
         appBar: AppBar(
           title: const TitleMenu(),
-          actions:  <Widget>[
+          actions: <Widget>[
             Container(
               margin: const EdgeInsets.only(right: 20),
               child: const CircleAvatar(
-                backgroundColor: Color.fromARGB(255, 7, 161, 182),
-                radius: 20,
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text('D')
-                )
-              ),
+                  backgroundColor: Color.fromARGB(255, 7, 161, 182),
+                  radius: 20,
+                  child:
+                      Padding(padding: EdgeInsets.all(10), child: Text('D'))),
             ),
           ],
         ),
@@ -78,8 +75,8 @@ List<BottomNavigationBarItem> _buildBottomNavigationBarItems() {
       label: 'Search',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.people_alt_outlined),
-      label: 'Sharing',
+      icon: Icon(Icons.photo_library_outlined),
+      label: 'Library',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.camera_alt_outlined),

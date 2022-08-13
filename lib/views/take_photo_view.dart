@@ -1,12 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, use_build_context_synchronously, avoid_print
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gallery_image/models/models.dart';
 import 'package:gallery_image/modelview/services/gallery_service.dart';
 import 'package:gallery_image/views/widgets/image_detail.dart';
 import 'package:gallery_image/views/widgets/loader.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 
 class TakePhotoView extends StatefulWidget {
   const TakePhotoView({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class TakePhotoView extends StatefulWidget {
 
 class _TakePhotoViewState extends State<TakePhotoView> {
   List _imagePaths = [];
+  File? compressImage;
 
   void setListImage() async {
     final response = await GalleryService().getImageServer();
@@ -42,15 +44,13 @@ class _TakePhotoViewState extends State<TakePhotoView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _customButton(
-              text: 'Select a Photo',
-              color: Colors.blue,
-              type: ImageSource.gallery 
-            ),
+                text: 'Select a Photo',
+                color: Colors.blue,
+                type: ImageSource.gallery),
             _customButton(
-              text: 'Take a Photo',
-              color: Colors.green,
-              type: ImageSource.camera 
-            ),
+                text: 'Take a Photo',
+                color: Colors.green,
+                type: ImageSource.camera),
           ],
         ),
       ),
@@ -58,6 +58,7 @@ class _TakePhotoViewState extends State<TakePhotoView> {
           ? const Text('No image selected.')
           : Expanded(
               child: GridView.builder(
+                physics: const BouncingScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 1,
@@ -94,7 +95,12 @@ class _TakePhotoViewState extends State<TakePhotoView> {
 
   void _takePhoto(BuildContext context, type) async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: type);
+    final XFile? image = await _picker.pickImage(
+      source: type,
+      maxWidth: 700,
+      maxHeight: 700,
+      imageQuality: 70,
+    );
     if (image == null) {
       print('No image selected');
       return;
@@ -118,11 +124,8 @@ class _TakePhotoViewState extends State<TakePhotoView> {
 
     closeLoader(context);
   }
-  ElevatedButton _customButton({
-      required text,
-      required color,
-      required type
-    }) {
+
+  ElevatedButton _customButton({required text, required color, required type}) {
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(color),
@@ -137,4 +140,3 @@ class _TakePhotoViewState extends State<TakePhotoView> {
     );
   }
 }
-

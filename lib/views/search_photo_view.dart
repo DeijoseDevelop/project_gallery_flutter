@@ -14,7 +14,17 @@ class _SearchPhotoViewState extends State<SearchPhotoView> {
   Gallery? photos;
 
   @override
+  void initState() {
+    super.initState();
+    photos = Gallery(
+      photos: [],
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     TextEditingController _searchController = TextEditingController();
 
@@ -29,6 +39,7 @@ class _SearchPhotoViewState extends State<SearchPhotoView> {
           width: size.width,
           child: Center(
               child: _searchForm(
+                  formKey: _formKey,
                   searchController: _searchController,
                   galleryService: _galleryService)),
         ),
@@ -38,21 +49,37 @@ class _SearchPhotoViewState extends State<SearchPhotoView> {
   }
 
   Form _searchForm(
-      {required TextEditingController searchController,
-      required GalleryService galleryService}) {
+      {
+        required formKey,
+        required TextEditingController searchController,
+        required GalleryService galleryService
+      }) {
     return Form(
+      key: formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.height * 0.1,
-            child: TextFormField(
+            child: TextField(
               controller: searchController,
               decoration: const InputDecoration(
                 labelText: 'Search',
                 hintText: 'Search',
               ),
+              onSubmitted: (value) {
+                if(formKey.currentState.validate()) {
+                  FocusScope.of(context).requestFocus(FocusNode());
+                    galleryService.searchGallery(value).then((value) {
+                      setState(() {
+                        photos = value;
+                      });
+                    }
+                  );
+                }
+              },
             ),
           ),
           const SizedBox(
@@ -61,11 +88,14 @@ class _SearchPhotoViewState extends State<SearchPhotoView> {
           ElevatedButton(
             child: const Text('Search'),
             onPressed: () async {
-              final photos =
-                  await galleryService.searchGallery(searchController.text);
-              setState(() {
-                this.photos = photos;
-              });
+              if(formKey.currentState.validate()){
+                FocusScope.of(context).requestFocus(FocusNode());
+                final photos =
+                    await galleryService.searchGallery(searchController.text);
+                setState(() {
+                  this.photos = photos;
+                });
+              }
             },
           ),
         ],
