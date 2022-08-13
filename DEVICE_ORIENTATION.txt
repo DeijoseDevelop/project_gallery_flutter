@@ -1,0 +1,3 @@
+if (Platform.isIOS || Platform.isAndroid){
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+}
