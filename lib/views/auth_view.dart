@@ -40,7 +40,7 @@ class AuthView extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeView()),
+                        MaterialPageRoute(builder: (context) => const HomeView()),
                         (Route<dynamic> route) => false,
                       );
                     } else {

@@ -1,11 +1,32 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_image/modelview/services/services.dart';
 import 'package:gallery_image/views/views.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class InitSplash extends StatelessWidget {
+class InitSplash extends StatefulWidget {
   const InitSplash({Key? key}) : super(key: key);
+
+  @override
+  State<InitSplash> createState() => _InitSplashState();
+}
+
+class _InitSplashState extends State<InitSplash> {
+  bool? deviceSupported;
+
+  void isSupported() async {
+    final supported = await  AuthService.is_supported();
+    setState(() {
+      deviceSupported = supported;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isSupported();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +34,9 @@ class InitSplash extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
 
     return AnimatedSplashScreen(
-      nextScreen: const AuthView(),
+      nextScreen: deviceSupported ?? false
+      ? const AuthView()
+      : const HomeView(),
       splash: Column(
         children: [
           Expanded(
