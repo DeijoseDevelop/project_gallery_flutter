@@ -17,7 +17,7 @@ class _Loader extends StatelessWidget {
   }
 }
 
-openLoader(BuildContext context) {
+void openLoader(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -28,6 +28,6 @@ openLoader(BuildContext context) {
   );
 }
 
-closeLoader(BuildContext context) {
+void closeLoader(BuildContext context) {
   Navigator.of(context, rootNavigator: true).pop();
 }

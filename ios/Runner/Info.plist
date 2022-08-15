@@ -8,6 +8,8 @@
 	<string>I need access to the camera to take a pictures.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>I need access to the microphone to record videos.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Why is my app authenticating using face id?</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

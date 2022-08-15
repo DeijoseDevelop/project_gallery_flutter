@@ -13,7 +13,7 @@ class InitSplash extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height;
 
     return AnimatedSplashScreen(
-      nextScreen: const HomeView(),
+      nextScreen: const AuthView(),
       splash: Column(
         children: [
           Expanded(

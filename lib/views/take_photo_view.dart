@@ -128,7 +128,7 @@ class _TakePhotoViewState extends State<TakePhotoView> {
       setState(() {
         _imagePaths = images.values.toList();
       });
-
+      Future.delayed(const Duration(seconds: 3));
       closeLoader(context);
     }
   }
