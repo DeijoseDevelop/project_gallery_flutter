@@ -38,7 +38,7 @@ class TitleMenu extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         const Text(
-          'Photos',
+          'PhotosFake',
           style: TextStyle(
             color: Colors.black54,
             fontSize: 25,
