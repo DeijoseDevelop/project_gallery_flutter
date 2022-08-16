@@ -90,7 +90,7 @@ class _PostForm extends StatelessWidget {
                   onPressed: () => Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => RegisterView())),
                   child: const Text(
-                    'do you need to register?',
+                    'Don\'t have an account yet?',
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16,

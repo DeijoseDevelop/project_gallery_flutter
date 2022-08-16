@@ -79,7 +79,7 @@ class _PostForm extends StatelessWidget {
                   controller: _email,
                   onSubmitted: (value) async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    final res = await login(context,
+                    final res = await register(context,
                         email: _email.text, password: _password.text);
                     print(res);
                   },
@@ -94,7 +94,7 @@ class _PostForm extends StatelessWidget {
                   controller: _password,
                   onSubmitted: (value) async {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    final res = await login(context,
+                    final res = await register(context,
                         email: _email.text, password: _password.text);
                     print(res);
                   },
