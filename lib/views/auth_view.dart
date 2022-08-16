@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_image/views/views.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../modelview/services/services.dart';
 
 class AuthView extends StatelessWidget {
@@ -104,7 +104,9 @@ class _LoginBiometric extends StatelessWidget {
       child: TextButton(
         onPressed: () async {
           bool isAuthenticated = await AuthService.authenticateUser();
+          final storage = const FlutterSecureStorage();
           if (isAuthenticated) {
+            await storage.write(key: 'token', value: 'tuehvuehnvuenuivneauncvuiebnuicvehnsui');
             // ignore: use_build_context_synchronously
             Navigator.pushAndRemoveUntil(
               context,
