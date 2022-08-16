@@ -104,7 +104,7 @@ class _LoginBiometric extends StatelessWidget {
       child: TextButton(
         onPressed: () async {
           bool isAuthenticated = await AuthService.authenticateUser();
-          final storage = const FlutterSecureStorage();
+          const storage = FlutterSecureStorage();
           if (isAuthenticated) {
             await storage.write(key: 'token', value: 'tuehvuehnvuenuivneauncvuiebnuicvehnsui');
             // ignore: use_build_context_synchronously

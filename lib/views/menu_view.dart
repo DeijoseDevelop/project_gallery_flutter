@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gallery_image/modelview/providers/auth_login.dart';
 import 'package:gallery_image/modelview/services/auth_service.dart';
 import 'package:gallery_image/modelview/services/gallery_service.dart';
 import 'package:gallery_image/views/views.dart';
 import 'package:gallery_image/views/widgets/loader.dart';
 import 'package:gallery_image/views/widgets/title_menu.dart';
-import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
