@@ -1,3 +1,5 @@
+export 'package:gallery_image/views/login_view.dart';
+export 'package:gallery_image/views/register_view.dart';
 export 'package:gallery_image/views/auth_view.dart';
 export 'package:gallery_image/views/init_splash.dart';
 export 'package:gallery_image/views/library_detail_view.dart';

@@ -9,7 +9,7 @@ class AuthView extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       appBar: AppBar(
           title: const Text(
         'Local Authentication',
@@ -21,7 +21,10 @@ class AuthView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.lock, size: size.width * 0.3),
+              Image.asset(
+                'assets/images/Fingerprint.png',
+                width: size.width * 0.8,
+              ),
               const SizedBox(height: 20),
               const Text(
                   'Tap on the button to authenticate with the device\'s local authentication system.',
@@ -31,50 +34,110 @@ class AuthView extends StatelessWidget {
                     color: Colors.black,
                   )),
               const SizedBox(height: 30),
-              SizedBox(
-                width: size.width,
-                child: TextButton(
-                  onPressed: () async {
-                    bool isAuthenticated = await AuthService.authenticateUser();
-                    if (isAuthenticated) {
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HomeView()),
-                        (Route<dynamic> route) => false,
-                      );
-                    } else {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Authentication failed.'),
-                        ),
-                      );
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(20),
-                    backgroundColor: Colors.blue,
-                    shadowColor: const Color(0xFF323247),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'LOGIN WITH BIOMETRICS',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          wordSpacing: 1.2,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+              _LoginBiometric(size: size),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              _LoginEmailAndPassword(size: size)
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LoginEmailAndPassword extends StatelessWidget {
+  const _LoginEmailAndPassword({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size.width,
+      child: TextButton(
+        onPressed: () async {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginView()),
+                (Route<dynamic> route) => false);
+        },
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.all(20),
+          backgroundColor: Colors.blue,
+          shadowColor: const Color(0xFF323247),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'LOGIN WITH EMAIL AND PASSWORD',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                wordSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LoginBiometric extends StatelessWidget {
+  const _LoginBiometric({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size.width,
+      child: TextButton(
+        onPressed: () async {
+          bool isAuthenticated = await AuthService.authenticateUser();
+          if (isAuthenticated) {
+            // ignore: use_build_context_synchronously
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeView()),
+              (Route<dynamic> route) => false,
+            );
+          } else {
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Authentication failed.'),
+              ),
+            );
+          }
+        },
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.all(20),
+          backgroundColor: Colors.blue,
+          shadowColor: const Color(0xFF323247),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'LOGIN WITH BIOMETRICS',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                wordSpacing: 1.2,
+              ),
+            ),
+          ],
         ),
       ),
     );

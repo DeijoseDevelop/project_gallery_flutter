@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class _Loader extends StatelessWidget {
   @override
@@ -7,10 +8,10 @@ class _Loader extends StatelessWidget {
       onWillPop: () async {
         return false;
       },
-      child: const Material(
+      child: Material(
         color: Colors.transparent,
         child: Center(
-          child: CircularProgressIndicator(),
+          child: Lottie.asset('assets/loading.json'),
         ),
       ),
     );

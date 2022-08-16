@@ -9,9 +9,7 @@ class TitleMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const SizedBox(width: 10),
         LetterGoogle(
           letter: 'G',
           color: Colors.blue,
@@ -65,7 +63,7 @@ class LetterGoogle extends StatelessWidget {
       style: GoogleFonts.roboto(
         color: color,
         fontWeight: FontWeight.bold,
-        fontSize: 25,
+        fontSize: 30,
       ),
     );
   }

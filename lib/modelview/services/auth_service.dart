@@ -12,7 +12,7 @@ class AuthService {
 
     bool isAuthenticated = false;
 
-    if (await is_supported()) {
+    if (await isSupported()) {
       try {
         isAuthenticated = await _localAuthentication.authenticate(
           localizedReason: 'Scan your fingerprint to authenticate',
@@ -44,7 +44,7 @@ class AuthService {
     return isAuthenticated;
   }
   // ignore: non_constant_identifier_names
-  static Future<bool> is_supported() async {
+  static Future<bool> isSupported() async {
     final LocalAuthentication _localAuthentication = LocalAuthentication();
     bool isBiometricSupported = await _localAuthentication.isDeviceSupported();
     bool canCheckBiometrics = await _localAuthentication.canCheckBiometrics;

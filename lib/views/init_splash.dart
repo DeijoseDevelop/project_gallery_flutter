@@ -4,6 +4,7 @@ import 'package:gallery_image/modelview/services/services.dart';
 import 'package:gallery_image/views/views.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class InitSplash extends StatefulWidget {
   const InitSplash({Key? key}) : super(key: key);
@@ -14,11 +15,20 @@ class InitSplash extends StatefulWidget {
 
 class _InitSplashState extends State<InitSplash> {
   bool? deviceSupported;
+  bool? isLogged;
 
   void isSupported() async {
-    final supported = await  AuthService.is_supported();
+    final supported = await AuthService.isSupported();
     setState(() {
       deviceSupported = supported;
+    });
+  }
+
+  void verifyLogged() async {
+    const storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'token');
+    setState(() {
+      isLogged = token != null;
     });
   }
 
@@ -26,6 +36,7 @@ class _InitSplashState extends State<InitSplash> {
   void initState() {
     super.initState();
     isSupported();
+    verifyLogged();
   }
 
   @override
@@ -34,9 +45,11 @@ class _InitSplashState extends State<InitSplash> {
     double _height = MediaQuery.of(context).size.height;
 
     return AnimatedSplashScreen(
-      nextScreen: deviceSupported ?? false
-      ? const AuthView()
-      : const HomeView(),
+      nextScreen: isLogged == true
+          ? const HomeView()
+          : deviceSupported != false
+              ? const AuthView()
+              : LoginView(),
       splash: Column(
         children: [
           Expanded(

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_image/modelview/providers/auth_login.dart';
+import 'package:gallery_image/modelview/services/auth_service.dart';
 import 'package:gallery_image/modelview/services/gallery_service.dart';
 import 'package:gallery_image/views/views.dart';
+import 'package:gallery_image/views/widgets/loader.dart';
 import 'package:gallery_image/views/widgets/title_menu.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -31,15 +35,54 @@ class _HomeViewState extends State<HomeView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const TitleMenu(),
+          automaticallyImplyLeading: false,
           actions: <Widget>[
-            Container(
+            /* Container(
               margin: const EdgeInsets.only(right: 20),
               child: const CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 7, 161, 182),
                   radius: 20,
                   child:
                       Padding(padding: EdgeInsets.all(10), child: Text('D'))),
+            ), */
+            const TitleMenu(),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+            TextButton(
+              style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.redAccent)),
+              onPressed: () async {
+                openLoader(context);
+                AuthLogin _authLogin = AuthLogin();
+                openLoader(context);
+                closeLoader(context);
+                await _authLogin.logout();
+                bool isSupported = await AuthService.isSupported();
+                if(isSupported) {
+                  Future.delayed(const Duration(seconds: 1), () async {
+                  Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AuthView()),
+                        (Route<dynamic> route) => false);
+                  });
+                } else{
+                  // ignore: use_build_context_synchronously
+                  Future.delayed(const Duration(seconds: 1), () async {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginView()),
+                        (Route<dynamic> route) => false);
+                  });
+                }
+              },
+              child: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.red,
+                  //fontSize: 20,
+                ),
+              ),
             ),
           ],
         ),
