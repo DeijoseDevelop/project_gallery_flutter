@@ -16,14 +16,10 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Login'
-          , style: TextStyle(
-            color: Colors.black,
-            fontSize: 35
-          ),
-        )
-      ),
+          title: const Text(
+        'Login',
+        style: TextStyle(color: Colors.black, fontSize: 35),
+      )),
       body: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
@@ -109,7 +105,9 @@ class _PasswordField extends StatelessWidget {
     Key? key,
     required TextEditingController password,
     required TextEditingController email,
-  }) : _password = password, _email = email, super(key: key);
+  })  : _password = password,
+        _email = email,
+        super(key: key);
 
   final TextEditingController _password;
   final TextEditingController _email;
@@ -126,8 +124,8 @@ class _PasswordField extends StatelessWidget {
       controller: _password,
       onSubmitted: (value) async {
         FocusScope.of(context).requestFocus(FocusNode());
-        final res = await login(context,
-            email: _email.text, password: _password.text);
+        final res =
+            await login(context, email: _email.text, password: _password.text);
         print(res);
       },
     );
@@ -139,23 +137,33 @@ class _EmailField extends StatelessWidget {
     Key? key,
     required TextEditingController email,
     required TextEditingController password,
-  }) : _email = email, _password = password, super(key: key);
+  })  : _email = email,
+        _password = password,
+        super(key: key);
 
   final TextEditingController _email;
   final TextEditingController _password;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       keyboardType: TextInputType.emailAddress,
       autocorrect: false,
       decoration: InputDecorations.authInputDecoration(
           labelText: 'Email', hintText: 'Enter the Email'),
       controller: _email,
-      onSubmitted: (value) async {
+      validator: (value) {
+        String pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        RegExp regExp = RegExp(pattern);
+        return regExp.hasMatch(value ?? '')
+          ? null
+          : 'Invalid Email';
+      },
+      onFieldSubmitted: (value) async {
         FocusScope.of(context).requestFocus(FocusNode());
-        final res = await login(context,
-            email: _email.text, password: _password.text);
+        final res =
+            await login(context, email: _email.text, password: _password.text);
         print(res);
       },
     );
@@ -172,10 +180,9 @@ Future<Map<String, dynamic>> login(BuildContext context,
   if (res.containsKey('idToken')) {
     // ignore: use_build_context_synchronously
     Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-         builder: (context) => const HomeView()),
-      (Route<dynamic> route) => false);
+        context,
+        MaterialPageRoute(builder: (context) => const HomeView()),
+        (Route<dynamic> route) => false);
     print(await storage.read(key: 'token'));
   } else {
     // ignore: use_build_context_synchronously
